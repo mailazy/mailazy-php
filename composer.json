@@ -1,8 +1,10 @@
 {
     "name": "mailazy/php-sdk",
-    "description": "A short description of what your package does",
+    "description": "Mailazy SDK for PHP",
 	"keywords": ["mailazy", "phpsdk", "send email", "email api", "SMTP", "email library"],
     "type": "library",
+	"homepage": "https://github.com/mailazy/mailazy-php",
+    "license": "Mailazy Platform",
 	"authors": [
         {
             "name": "Mailazy Team",
