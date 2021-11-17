@@ -30,7 +30,7 @@ class mailazyAPI
      */
     public function getApikey()
     {
-        return $this->apikey;
+        return $this->apikey?$this->apikey:"";
     }
     /**
      * Set API key
@@ -45,7 +45,7 @@ class mailazyAPI
      */
     public function getApisecret()
     {
-        return $this->apisecret;
+        return $this->apisecret?$this->apisecret:"";
     }
     /**
      * Set API secret
@@ -55,14 +55,14 @@ class mailazyAPI
         return $this->apisecret = $apisecret;
     }
 	/**
-     * Get API secret
+     * Get To Address
      */
     public function getAddress()
     {
-        return $this->addresses;
+        return isset($this->addresses)?$this->addresses:array();
     }
     /**
-     * Set API secret
+     * Set To Address
      */
     public function AddAddress($email,$name="")
     {
@@ -75,11 +75,51 @@ class mailazyAPI
 		return $this->addresses = array_merge($this->addresses, $toAddress);;
     }
 	/**
+     * Get CC Address
+     */
+    public function getCC()
+    {
+        return isset($this->cc)?$this->cc:array();
+    }
+    /**
+     * Set CC Address
+     */
+    public function addCC($email,$name="")
+    {
+		$this->cc = isset($this->cc)?$this->cc:array();
+		if(empty($name)){
+			$toAddress = array($email);
+		}else{
+			$toAddress = array($name.'<'.$email.'>');
+		}
+		return $this->cc = array_merge($this->cc, $toAddress);;
+    }
+	/**
+     * Get BCC Address
+     */
+    public function getBCC()
+    {
+        return isset($this->bcc)?$this->bcc:array();
+    }
+    /**
+     * Set BCC Address
+     */
+    public function addBCC($email,$name="")
+    {
+		$this->bcc = isset($this->bcc)?$this->bcc:array();
+		if(empty($name)){
+			$toAddress = array($email);
+		}else{
+			$toAddress = array($name.'<'.$email.'>');
+		}
+		return $this->bcc = array_merge($this->bcc, $toAddress);;
+    }
+	/**
      * Get subject
      */
     public function getSubject()
     {
-        return $this->subject;
+        return isset($this->subject)?$this->subject:"";
     }
     /**
      * Set subject
@@ -93,7 +133,7 @@ class mailazyAPI
      */
     public function getBody()
     {
-        return $this->body;
+        return isset($this->body)?$this->body:"";
     }
     /**
      * Set body
@@ -107,7 +147,7 @@ class mailazyAPI
      */
     public function getFrom()
     {
-        return $this->from;
+        return $this->from?$this->from:"";
     }
     /**
      * Set from
@@ -126,7 +166,7 @@ class mailazyAPI
      */
     public function getReplyTo()
     {
-        return $this->replyTo;
+        return $this->replyTo?$this->replyTo:"";
     }
     /**
      * Set replyTo
@@ -155,6 +195,28 @@ class mailazyAPI
         return $this->ishtml = !$ishtml?false:true;
     }
     /**
+     * Get Attachment
+     */
+    public function getAttachment()
+    {
+        return isset($this->attachments)?$this->attachments:array();
+    }
+    /**
+     * Add Attachment
+     */
+    public function AddAttachment($file, $name = '',  $encoding = 'base64', $type = 'application/pdf')
+    {
+        $this->attachments = isset($this->attachments)?$this->attachments:array();
+        $fileName = basename($file);
+        $name = (!empty($name)?$name:$fileName);
+        $ContentType = mime_content_type($file)?mime_content_type($file):$type;
+        $data = file_get_contents($file);
+        $attachment = array(array("type"=> $ContentType,
+            "file_name"=> $name,
+            "content"=> base64_encode($data)));
+        return $this->attachments = array_merge($this->attachments, $attachment);
+    }
+    /**
      * Send Link on Email
      */
     public function send()
@@ -165,13 +227,28 @@ class mailazyAPI
 			"subject"=>$this->getSubject(),
 			"content"=>array(
 				array(
-				"type"=> $this->getIsHTML()?"text/html":"text/plain", 
-				"value"=> $this->getBody()
+				"type"=> "text/plain", 
+				"value"=> strip_tags($this->getBody())
 				)
-			)
+            )
 		);
+		if($this->getIsHTML()){
+			$payload['content'][] = array(
+				"type"=> "text/html", 
+				"value"=> $this->getBody()
+			);
+		}
+		if(!empty($this->getBCC())){
+			$payload['bcc']=$this->getBCC();
+		}
+		if(!empty($this->getCC())){
+			$payload['cc']=$this->getCC();
+		}
 		if(!empty($this->getReplyTo())){
 			$payload['reply_to']=$this->getReplyTo();
+		}
+        if(!empty($this->getAttachment())){
+			$payload['attachments']=$this->getAttachment();
 		}
         return $this->request("v1/mail/send", array(
             "method"     => "POST",

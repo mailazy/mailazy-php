@@ -24,10 +24,15 @@ $mailazyClient->setApikey(MAILAZY_APIKEY);
 $mailazyClient->setApisecret(MAILAZY_APISECRET);
 $mailazyClient->IsHTML(true);
 $mailazyClient->AddAddress($email,$userName);
+//Set CC address
+$mailazyClient->addCC($email,$userName);
+//Set BCC address
+$mailazyClient->addBCC($email,$userName);
 $mailazyClient->setSubject($subject);
 $mailazyClient->setBody($message);
 $mailazyClient->setFrom($senderEmail,$sendername);
 $mailazyClient->addReplyTo($replyEmail,$replyname);
+$mailazyClient->AddAttachment($filePath);
 $mailazyClient->send();
 ```                
 
