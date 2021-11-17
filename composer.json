@@ -4,7 +4,6 @@
 	"keywords": ["mailazy", "phpsdk", "send email", "email api", "SMTP", "email library"],
     "type": "library",
 	"homepage": "https://github.com/mailazy/mailazy-php",
-    "license": "Mailazy Platform",
 	"authors": [
         {
             "name": "Mailazy Team",
