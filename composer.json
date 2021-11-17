@@ -1,0 +1,21 @@
+{
+    "name": "mailazy/php-sdk",
+    "description": "A short description of what your package does",
+	"keywords": ["mailazy", "phpsdk", "send email", "email api", "SMTP", "email library"],
+    "type": "library",
+	"authors": [
+        {
+            "name": "Mailazy Team",
+            "email": "connect@mailazy.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+	"autoload": {
+        "psr-4": {
+            "Mailazy\\": "src/Mailazy"
+        },
+        "files": ["src/Mailazy/mailazyAPI.php"]
+    }
+}

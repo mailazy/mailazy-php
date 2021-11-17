@@ -1,23 +1,29 @@
-# PHP-SDK
-PHP SDK based on Mailazy APIs.
 
-## Introduction
+# Mailazy SDK for PHP
+This repository contains the open source PHP SDK that allows you to access the Mailazy Platform from your PHP app.
 
-Mailazy PHP is a wrapper which provides access to Mailazy Platform APIs.
-
-Please visit [here](https://mailazy.com/) for more information.
+Please visit [mailazy.com](https://mailazy.com/) for more information.
 
 # Quickstart Guide
 
+## Installation
+
+The Mailazy PHP SDK can be installed with  [Composer](https://getcomposer.org/). Run this command:
+```
+composer require mailazy/php-sdk
+```
+
 ## Configuration
 After successful install, you need to define the following Mailazy Account info in your project anywhere before using the Mailazy SDK or in the config file of your project:
+
+### Usage
 
 ```
 <?php
 define('MAILAZY_APIKEY','xxxxxxxxxxxxxxxxxxxxxxxx');// mailazy apikey replace at "MAILAZY_APIKEY"
 define('MAILAZY_APISECRET','xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');// mailazy apikey replace at "MAILAZY_APISECRET"
 
-require_once(__DIR__."/mailazyAPI.php");
+require 'vendor/autoload.php';
 
 $mailazyClient = new mailazyAPI();
 $mailazyClient->setApikey(MAILAZY_APIKEY);
@@ -34,7 +40,11 @@ $mailazyClient->setFrom($senderEmail,$sendername);
 $mailazyClient->addReplyTo($replyEmail,$replyname);
 $mailazyClient->AddAttachment($filePath);
 $mailazyClient->send();
-```                
+```          
+
+## License
+
+Please see the  [license file](https://github.com/mailazy/mailazy-php/blob/master/LICENSE)  for more information.      
 
 ## Documentation
 
