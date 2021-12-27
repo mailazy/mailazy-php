@@ -9,7 +9,7 @@ class mailazyAPI
     {
         $apiurl = "https://api.mailazy.com/";
         $this->setApiurl($apiurl);
-		$this->IsHTML(true);
+		$this->isHTML(true);
     }
     /**
      * Get API URL
@@ -64,7 +64,7 @@ class mailazyAPI
     /**
      * Set To Address
      */
-    public function AddAddress($email,$name="")
+    public function addAddress($email,$name="")
     {
 		$this->addresses = isset($this->addresses)?$this->addresses:array();
 		if(empty($name)){
@@ -166,7 +166,7 @@ class mailazyAPI
      */
     public function getReplyTo()
     {
-        return $this->replyTo?$this->replyTo:"";
+        return isset($this->replyTo)?$this->replyTo:"";
     }
     /**
      * Set replyTo
@@ -190,7 +190,7 @@ class mailazyAPI
     /**
      * Set from
      */
-    public function IsHTML($ishtml)
+    public function isHTML($ishtml)
     {
         return $this->ishtml = !$ishtml?false:true;
     }
@@ -202,9 +202,9 @@ class mailazyAPI
         return isset($this->attachments)?$this->attachments:array();
     }
     /**
-     * Add Attachment
+     * add Attachment
      */
-    public function AddAttachment($file, $name = '',  $encoding = 'base64', $type = 'application/pdf')
+    public function addAttachment($file, $name = '',  $encoding = 'base64', $type = 'application/pdf')
     {
         $this->attachments = isset($this->attachments)?$this->attachments:array();
         $fileName = basename($file);

@@ -28,8 +28,8 @@ require 'vendor/autoload.php';
 $mailazyClient = new mailazyAPI();
 $mailazyClient->setApikey(MAILAZY_APIKEY);
 $mailazyClient->setApisecret(MAILAZY_APISECRET);
-$mailazyClient->IsHTML(true);
-$mailazyClient->AddAddress($email,$userName);
+$mailazyClient->isHTML(true);
+$mailazyClient->addAddress($email,$userName);
 //Set CC address
 $mailazyClient->addCC($email,$userName);
 //Set BCC address
@@ -38,7 +38,7 @@ $mailazyClient->setSubject($subject);
 $mailazyClient->setBody($message);
 $mailazyClient->setFrom($senderEmail,$sendername);
 $mailazyClient->addReplyTo($replyEmail,$replyname);
-$mailazyClient->AddAttachment($filePath);
+$mailazyClient->addAttachment($filePath);
 $mailazyClient->send();
 ```          
 
